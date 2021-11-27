@@ -202,7 +202,9 @@ impl<W: Write> ser::Serializer for &mut Uneval<W> {
     }
 
     fn serialize_tuple(self, len: usize) -> Result<Self::SerializeTuple, Self::Error> {
-        write!(self.writer, "::uneval::convert::convert_tuple_{}((", len)?;
+        write!(self.writer, "{{")?;
+        crate::helpers::tuple_converter(&mut self.writer, len)?;
+        write!(self.writer, "convert((")?;
         Ok(self.start_sub())
     }
 
@@ -280,7 +282,7 @@ impl<W: Write> ser::SerializeTuple for &mut Uneval<W> {
     }
 
     fn end(self) -> SerResult {
-        write!(self.writer, "))")?;
+        write!(self.writer, ")) }}")?;
         Ok(())
     }
 }
