@@ -36,4 +36,6 @@
 pub mod error;
 pub mod ser;
 pub mod funcs;
+pub mod convert;
+
 pub use funcs::{to_file, to_out_dir, to_string, write};

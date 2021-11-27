@@ -107,3 +107,13 @@ value = """
     ])
 }
 """
+
+[array]
+main_type = "Container"
+definition = """
+#[derive(PartialEq, Debug, Serialize)]
+pub struct Container(pub [u8; 2]);
+"""
+value = """
+definition::Container([1, 2])
+"""

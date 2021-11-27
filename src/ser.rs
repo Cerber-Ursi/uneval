@@ -201,8 +201,8 @@ impl<W: Write> ser::Serializer for &mut Uneval<W> {
         Ok(self.start_sub())
     }
 
-    fn serialize_tuple(self, _len: usize) -> Result<Self::SerializeTuple, Self::Error> {
-        write!(self.writer, "(")?;
+    fn serialize_tuple(self, len: usize) -> Result<Self::SerializeTuple, Self::Error> {
+        write!(self.writer, "::uneval::convert::convert_tuple_{}((", len)?;
         Ok(self.start_sub())
     }
 
@@ -280,7 +280,7 @@ impl<W: Write> ser::SerializeTuple for &mut Uneval<W> {
     }
 
     fn end(self) -> SerResult {
-        write!(self.writer, ")")?;
+        write!(self.writer, "))")?;
         Ok(())
     }
 }
@@ -358,7 +358,7 @@ impl<W: Write> ser::SerializeStruct for &mut Uneval<W> {
         T: serde::Serialize,
     {
         self.comma()?;
-        write!(self.writer, "{}:", key)?;
+        write!(self.writer, "{}: ", key)?;
         value.serialize(&mut **self)?;
         Ok(())
     }
@@ -381,7 +381,7 @@ impl<W: Write> ser::SerializeStructVariant for &mut Uneval<W> {
         T: serde::Serialize,
     {
         self.comma()?;
-        write!(self.writer, "{}:", key)?;
+        write!(self.writer, "{}: ", key)?;
         value.serialize(&mut **self)?;
         Ok(())
     }
