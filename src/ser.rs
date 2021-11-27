@@ -1,9 +1,15 @@
+//! Implementation of the Corona serializer.
+
 use crate::error::CoronaError;
 use serde::ser;
 use std::io::Write;
 
 pub(crate) type SerResult = Result<(), CoronaError>;
 
+/// Main serializer implementation.
+///
+/// Users are usually encouraged to use [`to_out_dir`][crate::funcs::to_out_dir] or, in special cases,
+/// [`to_file`][crate::funcs::to_file], [`write`][crate::funcs::write] or [`to_string`][crate::funcs::to_string].
 pub struct Corona<W: Write> {
     writer: W,
     inside: bool,

@@ -1,3 +1,5 @@
+//! Error returned by Corona serializer.
+
 use serde::ser;
 use thiserror::Error;
 
