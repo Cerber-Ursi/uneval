@@ -25,3 +25,5 @@ let value = {
 or the similar construction using [`lazy_static`](http://crates.io/crates/lazy_static).
 2. As a consequence, all the types used by the serialized one must have distinct names (or they'll clash with each other).
 3. Deserializer isn't implemented. This is intentional, since this crate isn't really intended for runtime usage.
+4. This serializer is intended to use with derived implementation. It may return bogus results when used with customized `Serialize`.
+5. It is impossible to serialize the struct with private fields outside from the module it is defined in. In fact, to be able to serialize this type at all, you'll have to distribute two copies of your crate, one of which would only export the definition with derived `Serialize` to be used by this crate during the build-time of the second copy. (Isn't this a bit too complex?)

@@ -8,3 +8,7 @@ edition = "2018"
 
 [dependencies]
 serde = "1.0"
+thiserror = "1.0"
+
+[dev_dependencies]
+batch_run = "1.0"

@@ -1,16 +1,16 @@
 use serde::ser;
+use thiserror::Error;
 
-#[derive(Debug)]
-pub struct CoronaError(String);
-
-impl std::fmt::Display for CoronaError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { todo!() }
+#[derive(Error, Debug)]
+pub enum CoronaError {
+    #[error("IO error while writing code: {0}")]
+    Io(#[from] std::io::Error),
+    #[error("Unknown error: {0}")]
+    Custom(String),
 }
-
-impl std::error::Error for CoronaError {}
 
 impl ser::Error for CoronaError {
     fn custom<T>(msg:T)->Self where T: std::fmt::Display {
-        Self(msg.to_string())
+        Self::Custom(msg.to_string())
     }
 }
