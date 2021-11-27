@@ -1,6 +1,6 @@
 [package]
 name = "uneval"
-version = "0.1.1"
+version = "0.2.0"
 authors = ["k.bagrov <k.bagrov@g.nsu.ru>"]
 edition = "2018"
 description = "Serde serializer to embed data as Rust code"

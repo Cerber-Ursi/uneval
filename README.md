@@ -10,6 +10,10 @@ This crate was inspired by the [Stack Overflow question](https://stackoverflow.c
 
 This crate is intended to be used from the build script. It will serialize anything you provide to it to any path you provide (or to the arbitrary [`io::Write`](https://doc.rust-lang.org/stable/std/io/trait.Write.html) implementation, or into `String`, if you want to). Then, you'll [`include!`](https://doc.rust-lang.org/stable/std/macro.include.html) the generated file wherever you want to use it.
 
+### How does it work?
+
+See the [crate documentation](https://docs.rs/uneval) for details. In short, we use information provided by Serde to emit the code, which, when assigned to the variable of correct type, will provide all necessary conversions by using `Into` and iterators.
+
 ### Is it really that simple?
 
 Well... not. There are several limitations.
