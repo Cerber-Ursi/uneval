@@ -1,6 +1,4 @@
-# corona
-
-![CoRONa - Compile-time Rust Objects, Native](rust-logo-blk.svg)
+# uneval
 
 Makes [Serde](http://serde.rs) serialize your data to the Rust source code.
 

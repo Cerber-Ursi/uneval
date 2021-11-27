@@ -9,21 +9,21 @@
 //! ## Usage
 //! In general, to embed some code into crate, you have to use the build script
 //! and [`include!`][include] macro. Inside the build script, you'll generate
-//! some code with one of the [functions][funcs] provided by `corona`,
+//! some code with one of the [functions][funcs] provided by `uneval`,
 //! and then include the generated file, like this:
 //! ```ignore
 //! let value = include!(concat!(env!(OUT_DIR), "/file_name.rs"));
 //! ```
 //!
 //! ## Limitations
-//! There are some cases when `corona` will be unable to generate valid code. Namely:
+//! There are some cases when `uneval` will be unable to generate valid code. Namely:
 //! 1. Since Serde doesn't provide us the full path to the type in question (and in most cases it's simply unable to),
 //! all the structs and enums used during value construction must be in scope.
 //! As a consequence, all of them must have distinct names - otherwise, there will be name clashes.
 //! 2. This serializer is intended for use with derived implementation. It may return bogus results
 //! when used with customized `Serialize`.
 //! 3. It is impossible to consume code for the type with private fields outside from the module it is defined in.
-//! In fact, to be able to use this type with `corona`, you'll have to distribute two copies of your crate,
+//! In fact, to be able to use this type with `uneval`, you'll have to distribute two copies of your crate,
 //! one of which would only export the definition with derived `Serialize` to be used by serializer
 //! during the build-time of the second copy. (Isn't this a bit too complex?)
 //! 4. It is impossible to use empty tuple structs (i.e. `Empty()`).

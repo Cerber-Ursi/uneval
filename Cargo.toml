@@ -1,5 +1,5 @@
 [package]
-name = "corona"
+name = "uneval"
 version = "0.1.0"
 authors = ["k.bagrov <k.bagrov@g.nsu.ru>"]
 edition = "2018"

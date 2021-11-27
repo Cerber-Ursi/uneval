@@ -1,21 +1,21 @@
-//! Implementation of the Corona serializer.
+//! Implementation of the Uneval serializer.
 
-use crate::error::CoronaError;
+use crate::error::UnevalError;
 use serde::ser;
 use std::io::Write;
 
-pub(crate) type SerResult = Result<(), CoronaError>;
+pub(crate) type SerResult = Result<(), UnevalError>;
 
 /// Main serializer implementation.
 ///
 /// Users are usually encouraged to use [`to_out_dir`][crate::funcs::to_out_dir] or, in special cases,
 /// [`to_file`][crate::funcs::to_file], [`write`][crate::funcs::write] or [`to_string`][crate::funcs::to_string].
-pub struct Corona<W: Write> {
+pub struct Uneval<W: Write> {
     writer: W,
     inside: bool,
 }
 
-impl<W: Write> Corona<W> {
+impl<W: Write> Uneval<W> {
     pub(crate) fn new(target: W) -> Self {
         Self {
             writer: target,
@@ -43,9 +43,9 @@ impl<W: Write> Corona<W> {
     }
 }
 
-impl<W: Write> ser::Serializer for &mut Corona<W> {
+impl<W: Write> ser::Serializer for &mut Uneval<W> {
     type Ok = ();
-    type Error = CoronaError;
+    type Error = UnevalError;
 
     type SerializeSeq = Self;
     type SerializeTuple = Self;
@@ -252,9 +252,9 @@ impl<W: Write> ser::Serializer for &mut Corona<W> {
     }
 }
 
-impl<W: Write> ser::SerializeSeq for &mut Corona<W> {
+impl<W: Write> ser::SerializeSeq for &mut Uneval<W> {
     type Ok = ();
-    type Error = CoronaError;
+    type Error = UnevalError;
 
     fn serialize_element<T: ?Sized>(&mut self, value: &T) -> Result<(), Self::Error>
     where
@@ -268,9 +268,9 @@ impl<W: Write> ser::SerializeSeq for &mut Corona<W> {
         Ok(())
     }
 }
-impl<W: Write> ser::SerializeTuple for &mut Corona<W> {
+impl<W: Write> ser::SerializeTuple for &mut Uneval<W> {
     type Ok = ();
-    type Error = CoronaError;
+    type Error = UnevalError;
 
     fn serialize_element<T: ?Sized>(&mut self, value: &T) -> Result<(), Self::Error>
     where
@@ -284,9 +284,9 @@ impl<W: Write> ser::SerializeTuple for &mut Corona<W> {
         Ok(())
     }
 }
-impl<W: Write> ser::SerializeTupleStruct for &mut Corona<W> {
+impl<W: Write> ser::SerializeTupleStruct for &mut Uneval<W> {
     type Ok = ();
-    type Error = CoronaError;
+    type Error = UnevalError;
 
     fn serialize_field<T: ?Sized>(&mut self, value: &T) -> Result<(), Self::Error>
     where
@@ -300,9 +300,9 @@ impl<W: Write> ser::SerializeTupleStruct for &mut Corona<W> {
         Ok(())
     }
 }
-impl<W: Write> ser::SerializeTupleVariant for &mut Corona<W> {
+impl<W: Write> ser::SerializeTupleVariant for &mut Uneval<W> {
     type Ok = ();
-    type Error = CoronaError;
+    type Error = UnevalError;
 
     fn serialize_field<T: ?Sized>(&mut self, value: &T) -> Result<(), Self::Error>
     where
@@ -316,9 +316,9 @@ impl<W: Write> ser::SerializeTupleVariant for &mut Corona<W> {
         Ok(())
     }
 }
-impl<W: Write> ser::SerializeMap for &mut Corona<W> {
+impl<W: Write> ser::SerializeMap for &mut Uneval<W> {
     type Ok = ();
-    type Error = CoronaError;
+    type Error = UnevalError;
 
     fn serialize_key<T: ?Sized>(&mut self, key: &T) -> Result<(), Self::Error>
     where
@@ -345,9 +345,9 @@ impl<W: Write> ser::SerializeMap for &mut Corona<W> {
         Ok(())
     }
 }
-impl<W: Write> ser::SerializeStruct for &mut Corona<W> {
+impl<W: Write> ser::SerializeStruct for &mut Uneval<W> {
     type Ok = ();
-    type Error = CoronaError;
+    type Error = UnevalError;
 
     fn serialize_field<T: ?Sized>(
         &mut self,
@@ -368,9 +368,9 @@ impl<W: Write> ser::SerializeStruct for &mut Corona<W> {
         Ok(())
     }
 }
-impl<W: Write> ser::SerializeStructVariant for &mut Corona<W> {
+impl<W: Write> ser::SerializeStructVariant for &mut Uneval<W> {
     type Ok = ();
-    type Error = CoronaError;
+    type Error = UnevalError;
 
     fn serialize_field<T: ?Sized>(
         &mut self,
