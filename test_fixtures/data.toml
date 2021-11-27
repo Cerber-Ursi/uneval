@@ -1,26 +1,28 @@
-simple
-
-Simple
-
+[simple]
+types = "Simple"
+definition = """
 #[derive(PartialEq, Debug, Serialize)]
 pub struct Simple {
     pub integer: i32,
+    pub character: char,
     pub float: f32,
     pub string: String,
     pub boolean: bool,
 }
-
+"""
+value = """
 definition::Simple {
     integer: 123,
+    character: 'c',
     float: std::f32::consts::PI,
     string: "text string".into(),
     boolean: false
 }
+"""
 
-nested
-
-Nested,Inner
-
+[nested]
+types = "Nested,Inner"
+definition = """
 #[derive(PartialEq, Debug, Serialize)]
 pub struct Nested {
     pub inner: Inner,
@@ -29,17 +31,17 @@ pub struct Nested {
 pub struct Inner {
     pub value: i32,
 }
-
+"""
+value = """
 definition::Nested {
     inner: definition::Inner {
         value: 123
     }
 }
-
-complex
-
-Complex
-
+"""
+[complex]
+types = "Complex"
+definition = """
 use std::collections::HashMap;
 #[derive(PartialEq, Debug, Serialize)]
 pub struct Complex {
@@ -47,7 +49,8 @@ pub struct Complex {
     pub vector: Vec<i32>,
     pub map: HashMap<i128, String>,
 }
-
+"""
+value = """
 {
     let mut map = std::collections::HashMap::new();
     map.insert(0, "test".into());
@@ -58,16 +61,17 @@ pub struct Complex {
         map
     }
 }
-
-floats
-
-Floats
-
+"""
+[floats]
+types = "Floats"
+definition = """
 #[derive(PartialEq, Debug, Serialize)]
 pub struct Floats(pub Vec<f32>);
-
+"""
+value = """
 definition::Floats(vec![
     123456789e30,
     123456789e-30,
     12345.6789
 ])
+"""

@@ -55,62 +55,62 @@ impl<W: Write> ser::Serializer for &mut Corona<W> {
     }
 
     fn serialize_i8(self, v: i8) -> SerResult {
-        write!(self.writer, "{}", v)?;
+        write!(self.writer, "{}i8", v)?;
         Ok(())
     }
 
     fn serialize_i16(self, v: i16) -> SerResult {
-        write!(self.writer, "{}", v)?;
+        write!(self.writer, "{}i16", v)?;
         Ok(())
     }
 
     fn serialize_i32(self, v: i32) -> SerResult {
-        write!(self.writer, "{}", v)?;
+        write!(self.writer, "{}i32", v)?;
         Ok(())
     }
 
     fn serialize_i64(self, v: i64) -> SerResult {
-        write!(self.writer, "{}", v)?;
+        write!(self.writer, "{}i64", v)?;
         Ok(())
     }
 
     fn serialize_i128(self, v: i128) -> SerResult {
-        write!(self.writer, "{}", v)?;
+        write!(self.writer, "{}i128", v)?;
         Ok(())
     }
 
     fn serialize_u8(self, v: u8) -> SerResult {
-        write!(self.writer, "{}", v)?;
+        write!(self.writer, "{}u8", v)?;
         Ok(())
     }
 
     fn serialize_u16(self, v: u16) -> SerResult {
-        write!(self.writer, "{}", v)?;
+        write!(self.writer, "{}u16", v)?;
         Ok(())
     }
 
     fn serialize_u32(self, v: u32) -> SerResult {
-        write!(self.writer, "{}", v)?;
+        write!(self.writer, "{}u32", v)?;
         Ok(())
     }
 
     fn serialize_u64(self, v: u64) -> SerResult {
-        write!(self.writer, "{}", v)?;
+        write!(self.writer, "{}u64", v)?;
         Ok(())
     }
 
     fn serialize_u128(self, v: u128) -> SerResult {
-        write!(self.writer, "{}", v)?;
+        write!(self.writer, "{}u128", v)?;
         Ok(())
     }
 
     fn serialize_f32(self, v: f32) -> SerResult {
-        write!(self.writer, "{}", v)?;
+        write!(self.writer, "{}f32", v)?;
         Ok(())
     }
 
     fn serialize_f64(self, v: f64) -> SerResult {
-        write!(self.writer, "{}", v)?;
+        write!(self.writer, "{}f64", v)?;
         Ok(())
     }
 

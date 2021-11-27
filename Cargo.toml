@@ -12,3 +12,4 @@ thiserror = "1.0"
 
 [dev_dependencies]
 batch_run = "1.2"
+toml = "0.5"
