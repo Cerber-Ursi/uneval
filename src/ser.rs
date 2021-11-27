@@ -2,7 +2,7 @@ use crate::error::CoronaError;
 use serde::ser;
 use std::io::Write;
 
-type SerResult = Result<(), CoronaError>;
+pub(crate) type SerResult = Result<(), CoronaError>;
 
 pub struct Corona<W: Write> {
     writer: W,
@@ -10,6 +10,13 @@ pub struct Corona<W: Write> {
 }
 
 impl<W: Write> Corona<W> {
+    pub(crate) fn new(target: W) -> Self {
+        Self {
+            writer: target,
+            inside: false,
+        }
+    }
+
     fn start_sub(&mut self) -> &mut Self {
         self.inside = true;
         self
