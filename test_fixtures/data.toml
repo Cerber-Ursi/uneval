@@ -119,3 +119,13 @@ pub struct Container(pub [u8; 2]);
 value = """
 definition::Container([1, 2])
 """
+
+[empty_array]
+main_type = "ZeroSizeContainer"
+definition = """
+#[derive(PartialEq, Debug, Serialize)]
+pub struct ZeroSizeContainer(pub [u8; 0]);
+"""
+value = """
+definition::ZeroSizeContainer([])
+"""

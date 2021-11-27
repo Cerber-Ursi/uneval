@@ -174,6 +174,21 @@
 //! assert_eq!(arr, [1, 2, 3, 4]);
 //! ```
 //!
+//! #### Zero-sized arrays
+//! Since the code presented above would work only for non-empty tuples, we have to handle the "empty tuple" case
+//! differently. Fortunately for us, the "real" empty tuple is handled as a unit, so we can directly emit the code
+//! which yields an empty array:
+//! ```
+//! let arr: [i32; 0] = {
+//!     #[inline]
+//!     fn convert<T>(_: ()) -> [T; 0] {
+//!         []
+//!     }
+//!
+//!     convert(())
+//! };
+//! ```
+//!
 //! ### Maps
 //!
 //! Since Rust doesn't have the notion of map literals, we can't construct one directly. However, standard map-like

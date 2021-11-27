@@ -1,7 +1,25 @@
 use crate::ser::SerResult;
 use std::io::Write;
 
-pub(crate) fn tuple_converter(mut output: impl Write, len: usize) -> SerResult {
+pub(crate) fn tuple_converter(output: impl Write, len: usize) -> SerResult {
+    if len > 0 {
+        non_zero_size(output, len)
+    } else {
+        zero_size(output)
+    }
+}
+
+fn zero_size(mut output: impl Write) -> SerResult {
+    write!(output, "
+        #[inline]
+        fn convert<T>(_: ()) -> [T; 0] {{
+            []
+        }}
+    ")?;
+    Ok(())
+}
+
+fn non_zero_size(mut output: impl Write, len: usize) -> SerResult {
     write!(
         output,
         "
