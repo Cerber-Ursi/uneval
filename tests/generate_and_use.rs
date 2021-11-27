@@ -9,7 +9,8 @@ use toml::from_str;
 
 #[derive(Deserialize, Default)]
 struct Data {
-    types: String,
+    main_type: String,
+    support_types: Option<String>,
     definition: String,
     value: String,
 }
@@ -38,8 +39,8 @@ impl Data {
         write!(
             File::create(&path.with_file_name(format!("{}-user.rs", name))).unwrap(),
             include_str!("user.tpl"),
-            types = self.types, 
-            ser_type = self.types.split(",").next().unwrap(),
+            types = self.support_types.as_ref().map_or(self.main_type.clone(), |types| format!("{},{}", self.main_type, types)), 
+            ser_type = self.main_type,
             value = self.value
         ).unwrap();
         write!(

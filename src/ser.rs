@@ -150,7 +150,7 @@ impl<W: Write> ser::Serializer for &mut Corona<W> {
     }
 
     fn serialize_unit_struct(self, name: &'static str) -> SerResult {
-        write!(self.writer, "{}()", name)?;
+        write!(self.writer, "{}", name)?;
         Ok(())
     }
 
@@ -160,7 +160,7 @@ impl<W: Write> ser::Serializer for &mut Corona<W> {
         _variant_index: u32,
         variant: &'static str,
     ) -> SerResult {
-        write!(self.writer, "{}::{}()", name, variant)?;
+        write!(self.writer, "{}::{}", name, variant)?;
         Ok(())
     }
 
@@ -216,7 +216,7 @@ impl<W: Write> ser::Serializer for &mut Corona<W> {
         variant: &'static str,
         _len: usize,
     ) -> Result<Self::SerializeTupleVariant, Self::Error> {
-        write!(self.writer, "{}::{}", name, variant)?;
+        write!(self.writer, "{}::{}(", name, variant)?;
         Ok(self.start_sub())
     }
 

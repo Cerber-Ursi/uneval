@@ -1,5 +1,5 @@
 [simple]
-types = "Simple"
+main_type = "Simple"
 definition = """
 #[derive(PartialEq, Debug, Serialize)]
 pub struct Simple {
@@ -21,7 +21,8 @@ definition::Simple {
 """
 
 [nested]
-types = "Nested,Inner"
+main_type = "Nested"
+support_types = "Inner"
 definition = """
 #[derive(PartialEq, Debug, Serialize)]
 pub struct Nested {
@@ -39,8 +40,9 @@ definition::Nested {
     }
 }
 """
+
 [complex]
-types = "Complex"
+main_type = "Complex"
 definition = """
 use std::collections::HashMap;
 #[derive(PartialEq, Debug, Serialize)]
@@ -62,8 +64,9 @@ value = """
     }
 }
 """
+
 [floats]
-types = "Floats"
+main_type = "Floats"
 definition = """
 #[derive(PartialEq, Debug, Serialize)]
 pub struct Floats(pub Vec<f32>);
@@ -74,4 +77,37 @@ definition::Floats(vec![
     123456789e-30,
     12345.6789
 ])
+"""
+
+[enums]
+main_type = "Container"
+support_types = "Enum,Unit,FuncUnit"
+definition = """
+#[derive(PartialEq, Debug, Serialize)]
+pub struct Unit;
+#[derive(PartialEq, Debug, Serialize)]
+pub struct FuncUnit;
+#[derive(PartialEq, Debug, Serialize)]
+pub enum Enum {
+    Empty,
+    Unit(Unit),
+    FuncUnit(FuncUnit),
+    Tuple(i32, String),
+    Struct{ key: i32, value: String },
+}
+
+#[derive(PartialEq, Debug, Serialize)]
+pub struct Container(pub Vec<Enum>);
+"""
+value = """
+{
+    use definition::*;
+    Container(vec![
+        Enum::Empty,
+        Enum::Unit(Unit),
+        Enum::FuncUnit(FuncUnit),
+        Enum::Tuple(1, "test".into()),
+        Enum::Struct{ key: 1, value: "test".into() },
+    ])
+}
 """
