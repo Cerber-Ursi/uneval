@@ -1,10 +1,11 @@
 use batch_run::Batch;
+use serde::Deserialize;
 use std::{
+    collections::HashMap,
     fs::{create_dir, read_to_string, File},
     io::Write,
-    path::{Path, PathBuf}, collections::HashMap,
+    path::{Path, PathBuf},
 };
-use serde::Deserialize;
 use toml::from_str;
 
 #[derive(Deserialize, Default)]
@@ -39,19 +40,28 @@ impl Data {
         write!(
             File::create(&path.with_file_name(format!("{}-user.rs", name))).unwrap(),
             include_str!("user.tpl"),
-            types = self.support_types.as_ref().map_or(self.main_type.clone(), |types| format!("{},{}", self.main_type, types)), 
+            types = self
+                .support_types
+                .as_ref()
+                .map_or(self.main_type.clone(), |types| format!(
+                    "{},{}",
+                    self.main_type, types
+                )),
             ser_type = self.main_type,
             value = self.value
-        ).unwrap();
+        )
+        .unwrap();
         write!(
             File::create(&path.with_file_name(format!("{}-main.snapshot", name))).unwrap(),
             include_str!("main.snapshot.tpl"),
             name = name
-        ).unwrap();
+        )
+        .unwrap();
         write!(
             File::create(&path.with_file_name(format!("{}-user.snapshot", name))).unwrap(),
             include_str!("user.snapshot.tpl"),
-        ).unwrap();
+        )
+        .unwrap();
     }
 }
 
@@ -60,7 +70,8 @@ fn main() {
     let toml = read_to_string("test_fixtures/data.toml").unwrap();
     let data: HashMap<String, Data> = from_str(&toml).unwrap();
     let path: PathBuf = "test_fixtures".into();
-    data.into_iter().for_each(|(key, value)| value.write(&key, &path));
+    data.into_iter()
+        .for_each(|(key, value)| value.write(&key, &path));
 
     let b = Batch::new();
     b.run_match("test_fixtures/**/*-main.rs");

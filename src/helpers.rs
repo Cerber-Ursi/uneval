@@ -2,11 +2,14 @@ use crate::ser::SerResult;
 use std::io::Write;
 
 pub(crate) fn tuple_converter(mut output: impl Write, len: usize) -> SerResult {
-    write!(output, "
+    write!(
+        output,
+        "
         trait FromTuple<T>: Sized {{
             fn from_tuple(tuple: T) -> Self;
         }}
-    ")?;
+    "
+    )?;
     let array = format!("[T; {}]", len);
     let tuple = format!("({})", (0..len).map(|_| "T,").collect::<String>());
     let mapping = format!(

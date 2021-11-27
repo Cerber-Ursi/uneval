@@ -49,6 +49,7 @@ use std::collections::HashMap;
 pub struct Complex {
     pub tuple: (i32, f32, String),
     pub vector: Vec<i32>,
+    pub byte_arr: Vec<u8>,
     pub map: HashMap<i128, String>,
 }
 """
@@ -60,6 +61,7 @@ value = """
     definition::Complex {
         tuple: (1, 1.0, "tuple entry".into()),
         vector: vec![1, 2, 3, 4, 5, -1, -2, -3, -4, -5],
+        byte_arr: b"asdfghj".to_vec(),
         map
     }
 }

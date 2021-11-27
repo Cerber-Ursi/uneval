@@ -14,7 +14,10 @@ pub enum UnevalError {
 }
 
 impl ser::Error for UnevalError {
-    fn custom<T>(msg:T)->Self where T: std::fmt::Display {
+    fn custom<T>(msg: T) -> Self
+    where
+        T: std::fmt::Display,
+    {
         Self::Custom(msg.to_string())
     }
 }

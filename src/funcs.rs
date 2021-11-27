@@ -1,7 +1,7 @@
 //! Convenience functions to be used with Uneval.
 
-use crate::ser::{SerResult, Uneval};
 use crate::error::UnevalError;
+use crate::ser::{SerResult, Uneval};
 use serde::Serialize;
 
 /// Write generated Rust code to the provided [`Write`][std::io::Write] implementation.
@@ -35,14 +35,17 @@ pub fn to_file(value: impl Serialize, target: impl AsRef<std::path::Path>) -> Se
 }
 
 /// Convenience wrapper around [`to_file`].
-/// 
+///
 /// This function finds out where the output directory is by looking at `OUT_DIR` environment variable
 /// and creates the file with the provided name there.
 pub fn to_out_dir(value: impl Serialize, file_name: impl AsRef<str>) -> SerResult {
     let path: std::path::PathBuf = [
-        std::env::var("OUT_DIR").expect("OUT_DIR not set, check if you're running this from the build script"),
-        file_name.as_ref().into()
-    ].iter().collect();
+        std::env::var("OUT_DIR")
+            .expect("OUT_DIR not set, check if you're running this from the build script"),
+        file_name.as_ref().into(),
+    ]
+    .iter()
+    .collect();
     value.serialize(&mut Uneval::new(std::fs::File::create(path)?))
 }
 
