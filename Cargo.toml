@@ -8,6 +8,3 @@ edition = "2018"
 
 [dependencies]
 serde = "1.0"
-
-[dev-dependencies]
-trybuild = "1.0"
