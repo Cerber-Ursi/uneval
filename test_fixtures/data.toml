@@ -81,17 +81,14 @@ definition::Floats(vec![
 
 [enums]
 main_type = "Container"
-support_types = "Enum,Unit,FuncUnit"
+support_types = "Enum,Unit"
 definition = """
 #[derive(PartialEq, Debug, Serialize)]
 pub struct Unit;
 #[derive(PartialEq, Debug, Serialize)]
-pub struct FuncUnit;
-#[derive(PartialEq, Debug, Serialize)]
 pub enum Enum {
     Empty,
     Unit(Unit),
-    FuncUnit(FuncUnit),
     Tuple(i32, String),
     Struct{ key: i32, value: String },
 }
@@ -105,7 +102,6 @@ value = """
     Container(vec![
         Enum::Empty,
         Enum::Unit(Unit),
-        Enum::FuncUnit(FuncUnit),
         Enum::Tuple(1, "test".into()),
         Enum::Struct{ key: 1, value: "test".into() },
     ])
