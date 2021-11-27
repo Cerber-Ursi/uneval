@@ -18,15 +18,20 @@ impl<W: Write> Corona<W> {
     }
 
     fn start_sub(&mut self) -> &mut Self {
-        self.inside = true;
+        self.inside = false;
         self
     }
 
-    fn serialize_item(&mut self, item: impl ser::Serialize) -> SerResult {
+    fn comma(&mut self) -> SerResult {
         if self.inside {
             write!(self.writer, ",")?;
         }
         self.inside = true;
+        Ok(())
+    }
+
+    fn serialize_item(&mut self, item: impl ser::Serialize) -> SerResult {
+        self.comma()?;
         item.serialize(self)?;
         Ok(())
     }
@@ -45,67 +50,67 @@ impl<W: Write> ser::Serializer for &mut Corona<W> {
     type SerializeStructVariant = Self;
 
     fn serialize_bool(self, v: bool) -> SerResult {
-        write!(self.writer, "{}", v.to_string())?;
+        write!(self.writer, "{}", v)?;
         Ok(())
     }
 
     fn serialize_i8(self, v: i8) -> SerResult {
-        write!(self.writer, "{}", v.to_string())?;
+        write!(self.writer, "{}", v)?;
         Ok(())
     }
 
     fn serialize_i16(self, v: i16) -> SerResult {
-        write!(self.writer, "{}", v.to_string())?;
+        write!(self.writer, "{}", v)?;
         Ok(())
     }
 
     fn serialize_i32(self, v: i32) -> SerResult {
-        write!(self.writer, "{}", v.to_string())?;
+        write!(self.writer, "{}", v)?;
         Ok(())
     }
 
     fn serialize_i64(self, v: i64) -> SerResult {
-        write!(self.writer, "{}", v.to_string())?;
+        write!(self.writer, "{}", v)?;
         Ok(())
     }
 
     fn serialize_i128(self, v: i128) -> SerResult {
-        write!(self.writer, "{}", v.to_string())?;
+        write!(self.writer, "{}", v)?;
         Ok(())
     }
 
     fn serialize_u8(self, v: u8) -> SerResult {
-        write!(self.writer, "{}", v.to_string())?;
+        write!(self.writer, "{}", v)?;
         Ok(())
     }
 
     fn serialize_u16(self, v: u16) -> SerResult {
-        write!(self.writer, "{}", v.to_string())?;
+        write!(self.writer, "{}", v)?;
         Ok(())
     }
 
     fn serialize_u32(self, v: u32) -> SerResult {
-        write!(self.writer, "{}", v.to_string())?;
+        write!(self.writer, "{}", v)?;
         Ok(())
     }
 
     fn serialize_u64(self, v: u64) -> SerResult {
-        write!(self.writer, "{}", v.to_string())?;
+        write!(self.writer, "{}", v)?;
         Ok(())
     }
 
     fn serialize_u128(self, v: u128) -> SerResult {
-        write!(self.writer, "{}", v.to_string())?;
+        write!(self.writer, "{}", v)?;
         Ok(())
     }
 
     fn serialize_f32(self, v: f32) -> SerResult {
-        write!(self.writer, "{}", v.to_string())?;
+        write!(self.writer, "{}", v)?;
         Ok(())
     }
 
     fn serialize_f64(self, v: f64) -> SerResult {
-        write!(self.writer, "{}", v.to_string())?;
+        write!(self.writer, "{}", v)?;
         Ok(())
     }
 
@@ -115,7 +120,7 @@ impl<W: Write> ser::Serializer for &mut Corona<W> {
     }
 
     fn serialize_str(self, v: &str) -> SerResult {
-        write!(self.writer, "\"{}\"", v)?;
+        write!(self.writer, "\"{}\".into()", v)?;
         Ok(())
     }
 
@@ -313,8 +318,8 @@ impl<W: Write> ser::SerializeMap for &mut Corona<W> {
     where
         T: serde::Serialize,
     {
-        // a little hack for code reuse
-        self.serialize_item("(")?;
+        self.comma()?;
+        write!(self.writer, "(")?;
         key.serialize(&mut **self)?;
         write!(self.writer, ",")?;
         Ok(())
@@ -346,7 +351,8 @@ impl<W: Write> ser::SerializeStruct for &mut Corona<W> {
     where
         T: serde::Serialize,
     {
-        self.serialize_item(format!("{}:", key))?;
+        self.comma()?;
+        write!(self.writer, "{}:", key)?;
         value.serialize(&mut **self)?;
         Ok(())
     }
@@ -368,7 +374,8 @@ impl<W: Write> ser::SerializeStructVariant for &mut Corona<W> {
     where
         T: serde::Serialize,
     {
-        self.serialize_item(format!("{}:", key))?;
+        self.comma()?;
+        write!(self.writer, "{}:", key)?;
         value.serialize(&mut **self)?;
         Ok(())
     }

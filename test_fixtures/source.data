@@ -1,0 +1,73 @@
+simple
+
+Simple
+
+#[derive(PartialEq, Debug, Serialize)]
+pub struct Simple {
+    pub integer: i32,
+    pub float: f32,
+    pub string: String,
+    pub boolean: bool,
+}
+
+definition::Simple {
+    integer: 123,
+    float: std::f32::consts::PI,
+    string: "text string".into(),
+    boolean: false
+}
+
+nested
+
+Nested,Inner
+
+#[derive(PartialEq, Debug, Serialize)]
+pub struct Nested {
+    pub inner: Inner,
+}
+#[derive(PartialEq, Debug, Serialize)]
+pub struct Inner {
+    pub value: i32,
+}
+
+definition::Nested {
+    inner: definition::Inner {
+        value: 123
+    }
+}
+
+complex
+
+Complex
+
+use std::collections::HashMap;
+#[derive(PartialEq, Debug, Serialize)]
+pub struct Complex {
+    pub tuple: (i32, f32, String),
+    pub vector: Vec<i32>,
+    pub map: HashMap<i128, String>,
+}
+
+{
+    let mut map = std::collections::HashMap::new();
+    map.insert(0, "test".into());
+    map.insert(120, "test longer".into());
+    definition::Complex {
+        tuple: (1, 1.0, "tuple entry".into()),
+        vector: vec![1, 2, 3, 4, 5, -1, -2, -3, -4, -5],
+        map
+    }
+}
+
+floats
+
+Floats
+
+#[derive(PartialEq, Debug, Serialize)]
+pub struct Floats(pub Vec<f32>);
+
+definition::Floats(vec![
+    123456789e30,
+    123456789e-30,
+    12345.6789
+])
