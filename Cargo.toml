@@ -1,10 +1,13 @@
 [package]
 name = "uneval"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["k.bagrov <k.bagrov@g.nsu.ru>"]
 edition = "2018"
 description = "Serde serializer to embed data as Rust code"
 license = "MIT"
+readme = "README.md"
+repository = "https://github.com/Cerberuser/uneval"
+categories = ["development-tools::build-utils"]
 
 [dependencies]
 serde = "1.0"
