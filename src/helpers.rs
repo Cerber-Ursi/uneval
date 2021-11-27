@@ -10,12 +10,15 @@ pub(crate) fn tuple_converter(output: impl Write, len: usize) -> SerResult {
 }
 
 fn zero_size(mut output: impl Write) -> SerResult {
-    write!(output, "
+    write!(
+        output,
+        "
         #[inline]
         fn convert<T>(_: ()) -> [T; 0] {{
             []
         }}
-    ")?;
+    "
+    )?;
     Ok(())
 }
 
