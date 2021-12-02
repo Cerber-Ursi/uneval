@@ -233,10 +233,6 @@
 //! In fact, to be able to use this type with `uneval`, you'll have to distribute two copies of your crate,
 //! one of which would only export the definition with derived `Serialize` to be used by serializer
 //! during the build-time of the second copy. (Isn't this a bit too complex?)
-//! 4. It is impossible to use empty tuple structs (i.e. `Empty()`).
-//! From the Serde's point of view, they are indistinguishable from unit structs (i.e. `Unit`),
-//! but the same Rust syntax can't be used for both, and, since ordinary unit structs are much
-//! more common, it was decided to correctly handle them.
 //!
 //! [include]: https://doc.rust-lang.org/stable/std/macro.include.html
 

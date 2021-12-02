@@ -32,7 +32,6 @@ or the similar construction using [`lazy_static`](http://crates.io/crates/lazy_s
 3. Deserializer isn't implemented. This is intentional, since this crate isn't really intended for runtime usage. Well, in fact, the deserializer *is* implemented - it's just the Rust compiler itself.
 4. This serializer is intended for use with derived implementation. It may return bogus results when used with customized `Serialize`.
 5. It is impossible to serialize the struct with private fields outside from the module it is defined in. In fact, to be able to serialize this type at all, you'll have to distribute two copies of your crate, one of which would only export the definition with derived `Serialize` to be used by this crate during the build-time of the second copy. (Isn't this a bit too complex?)
-6. It is impossible to use empty tuple structs (i.e. `Empty()`). From the Serde's point of view, they are indistinguishable from unit structs (i.e. `Unit`), but the same Rust syntax can't be used for both, and, since ordinary unit structs are much more common, it was decided to abandon the empty tuples.
 
 If you find any other case where this doesn't work, feel free to open an issue - we'll either fix the code or document the newly-found limitation.
 
