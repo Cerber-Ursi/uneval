@@ -16,7 +16,7 @@ pub struct Uneval<W: Write> {
 }
 
 impl<W: Write> Uneval<W> {
-    pub(crate) fn new(target: W) -> Self {
+    pub fn new(target: W) -> Self {
         Self {
             writer: target,
             inside: false,
@@ -267,6 +267,7 @@ impl<W: Write> ser::SerializeSeq for &mut Uneval<W> {
 
     fn end(self) -> SerResult {
         write!(self.writer, "].into_iter().collect()")?;
+        self.inside = true;
         Ok(())
     }
 }
@@ -283,6 +284,7 @@ impl<W: Write> ser::SerializeTuple for &mut Uneval<W> {
 
     fn end(self) -> SerResult {
         write!(self.writer, ")) }}")?;
+        self.inside = true;
         Ok(())
     }
 }
@@ -299,6 +301,7 @@ impl<W: Write> ser::SerializeTupleStruct for &mut Uneval<W> {
 
     fn end(self) -> SerResult {
         write!(self.writer, ")")?;
+        self.inside = true;
         Ok(())
     }
 }
@@ -315,6 +318,7 @@ impl<W: Write> ser::SerializeTupleVariant for &mut Uneval<W> {
 
     fn end(self) -> SerResult {
         write!(self.writer, ")")?;
+        self.inside = true;
         Ok(())
     }
 }
@@ -344,6 +348,7 @@ impl<W: Write> ser::SerializeMap for &mut Uneval<W> {
 
     fn end(self) -> SerResult {
         write!(self.writer, "].into_iter().collect()")?;
+        self.inside = true;
         Ok(())
     }
 }
@@ -367,6 +372,7 @@ impl<W: Write> ser::SerializeStruct for &mut Uneval<W> {
 
     fn end(self) -> SerResult {
         write!(self.writer, "}}")?;
+        self.inside = true;
         Ok(())
     }
 }
@@ -390,6 +396,7 @@ impl<W: Write> ser::SerializeStructVariant for &mut Uneval<W> {
 
     fn end(self) -> SerResult {
         write!(self.writer, "}}")?;
+        self.inside = true;
         Ok(())
     }
 }

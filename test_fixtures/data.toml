@@ -93,6 +93,8 @@ pub enum Enum {
     Unit(Unit),
     Tuple(i32, String),
     Struct{ key: i32, value: String },
+    EmptyTuple(),
+    EmptyStruct {},
 }
 
 #[derive(PartialEq, Debug, Serialize)]
@@ -102,10 +104,13 @@ value = """
 {
     use definition::*;
     Container(vec![
-        Enum::Empty,
         Enum::Unit(Unit),
         Enum::Tuple(1, "test".into()),
         Enum::Struct{ key: 1, value: "test".into() },
+        Enum::EmptyTuple(),
+        Enum::EmptyStruct{},
+        // this is intentionally last, to catch an error at previous step
+        Enum::Empty,
     ])
 }
 """
@@ -128,4 +133,41 @@ pub struct ZeroSizeContainer(pub [u8; 0]);
 """
 value = """
 definition::ZeroSizeContainer([])
+"""
+
+[empty_fields_issue_3]
+main_type = "Foo"
+support_types = "UnitType,UnitStruct,UnitTuple"
+definition = """
+use std::collections::HashMap;
+#[derive(PartialEq, Debug, Serialize)]
+pub struct UnitType;
+#[derive(PartialEq, Debug, Serialize)]
+pub struct UnitStruct {}
+#[derive(PartialEq, Debug, Serialize)]
+pub struct UnitTuple();
+#[derive(PartialEq, Debug, Serialize)]
+pub struct Foo {
+  pub vec: Vec<String>,
+  pub map: HashMap<String, String>,
+  pub unit: (),
+  pub unit_type: UnitType,
+  pub unit_struct: UnitStruct,
+  pub unit_tuple: UnitTuple,
+  pub last: String
+}
+"""
+value = """
+{
+    use definition::*;
+    Foo {
+        vec: vec![],
+        map: std::collections::HashMap::new(),
+        unit: (),
+        unit_type: UnitType,
+        unit_struct: UnitStruct {},
+        unit_tuple: UnitTuple(),
+        last: "".into()
+    }
+}
 """
