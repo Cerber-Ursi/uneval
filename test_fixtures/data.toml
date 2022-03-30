@@ -172,7 +172,7 @@ value = """
 }
 """
 
-[escapist_strings]
+[escapist_strings_issue_4]
 main_type = "Foo"
 definition = """
 #[derive(PartialEq, Debug, Serialize)]
@@ -183,7 +183,7 @@ pub struct Foo {
 """
 value = """
 definition::Foo {
-    s: vec!["\\"".into(), "\\n".into()],
-    c: vec!['\\'', '\\n'],
+    s: vec!["\\"".into(), "\\n".into(), "'".into(), "❤".into()],
+    c: vec!['\\'', '\\n', '"', '❤'],
 }
 """

@@ -121,12 +121,12 @@ impl<W: Write> ser::Serializer for &mut Uneval<W> {
     }
 
     fn serialize_char(self, v: char) -> SerResult {
-        write!(self.writer, "{:?}", v)?;
+        write!(self.writer, "'{}'", v.escape_default().collect::<String>())?;
         Ok(())
     }
 
     fn serialize_str(self, v: &str) -> SerResult {
-        write!(self.writer, "{:?}.into()", v)?;
+        write!(self.writer, "\"{}\".into()", v.escape_default().collect::<String>())?;
         Ok(())
     }
 
