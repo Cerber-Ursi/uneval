@@ -171,3 +171,19 @@ value = """
     }
 }
 """
+
+[escapist_strings]
+main_type = "Foo"
+definition = """
+#[derive(PartialEq, Debug, Serialize)]
+pub struct Foo {
+  pub s: Vec<String>,
+  pub c: Vec<char>,
+}
+"""
+value = """
+definition::Foo {
+    s: vec!["\\"".into(), "\\n".into()],
+    c: vec!['\\'', '\\n'],
+}
+"""
